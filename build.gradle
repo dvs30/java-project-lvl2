@@ -11,6 +11,11 @@ plugins {
     id 'checkstyle'
 }
 
+dependencies {
+    implementation 'info.picocli:picocli:4.6.2'
+    annotationProcessor 'info.picocli:picocli-codegen:4.6.2'
+}
+
 repositories {
     mavenCentral()
 }
