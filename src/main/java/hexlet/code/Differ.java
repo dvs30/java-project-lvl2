@@ -17,9 +17,9 @@ public class Differ {
     }
 
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Map<String, Object> firstFile = readFile(filepath1);
-        Map<String, Object> secondFile = readFile(filepath2);
-        List<Map<String, Object>> difference = findDifference(firstFile, secondFile);
+        Map<String, Object> file1 = readFile(filepath1);
+        Map<String, Object> file2 = readFile(filepath2);
+        List<Map<String, Object>> difference = findDifference(file1, file2);
         return Formatter.format(difference, format);
     }
 
@@ -30,20 +30,20 @@ public class Differ {
     }
 
     private static List<Map<String, Object>> findDifference(
-            Map<String, Object> firstFile,
-            Map<String, Object> secondFile) {
+            Map<String, Object> file1,
+            Map<String, Object> file2) {
         List<Map<String, Object>> difference = new ArrayList<>();
-        Set<String> keys = new HashSet<>(firstFile.keySet());
-        keys.addAll(secondFile.keySet());
+        Set<String> keys = new HashSet<>(file1.keySet());
+        keys.addAll(file2.keySet());
 
         for (String key : keys) {
-            Object firstValue = firstFile.get(key);
-            Object secondValue = secondFile.get(key);
-            if (!firstFile.containsKey(key)) {
+            Object firstValue = file1.get(key);
+            Object secondValue = file2.get(key);
+            if (!file1.containsKey(key)) {
                 difference.add(doEntry("added", key, secondValue));
-            } else if (!secondFile.containsKey(key)) {
+            } else if (!file2.containsKey(key)) {
                 difference.add(doEntry("removed", key, firstValue));
-            } else if (Objects.equals(firstFile, secondFile)) {
+            } else if (Objects.equals(file1, file2)) {
                 difference.add(doEntry("unchanged", key, firstValue));
             } else {
                 difference.add(doEntry("updated", key, secondValue, firstValue));
