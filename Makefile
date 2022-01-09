@@ -18,4 +18,4 @@ lint:
 build:
 		./gradlew clean build
 
-.PHONY: install
+.PHONY: install, build
